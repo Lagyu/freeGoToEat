@@ -1,23 +1,31 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import React, {Component} from 'react';
+
 
 export default function Home() {
+  const title = 'freeGoToEat'
+  const sites = ['hoge','fuga']
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Hello World!
+          {title}
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <div className={styles.description}>
+          <input type="text"/>
+          <input type="button" value={"検索"}/>
+          
+          <div className={styles.filter}>
+            <Filter　sites={sites}　props={styles}/>
+          </div>
+        </div>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -27,7 +35,6 @@ export default function Home() {
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
 
           <a
@@ -62,4 +69,36 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+class SelectButton extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      class: ""
+    };
+  }
+
+  selected(){
+    this.setState({class : "selected"});
+  }
+  render() {
+    console.log(this.props)
+    return(
+      <button type="button" onClick={() => {this.selected()}} className={this.state.class}>
+        {this.props.val}
+      </button>
+    );
+  }
+}
+
+
+class Filter extends Component {
+
+  render(){
+    return (
+        this.props.sites.map((elem) => {
+          return (<SelectButton val={elem}></SelectButton>)
+    }))
+  }
 }
