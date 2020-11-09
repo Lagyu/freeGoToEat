@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 export default function Home() {
   const title = 'freeGoToEat'
   const sites = ['hoge','fuga']
+
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +25,7 @@ export default function Home() {
         </div>
         <div className={styles.filter}>
             <h4>Filter</h4>
-            <Filter　sites={sites}　props={styles}/>
+            {sites.map(site => <Filter site ={site}/>)}
         </div>
 
       </main>
@@ -43,34 +44,27 @@ export default function Home() {
   )
 }
 
-class SelectButton extends Component{
-  constructor(props) {
+class Filter extends Component {
+  constructor(props){
     super(props);
     this.state = {
-      class: ""
+      value: false,
     };
+    console.log(this.state)
   }
 
-  selected(){
-    this.setState({class : "selected"});
+  selected = () =>{
+    this.setState({
+        value: !this.state.value
+    });
   }
-  render() {
-    console.log(this.props)
-    return(
-      <button type="button" onClick={() => {this.selected()}} className={this.state.class}>
-        {this.props.val}
-      </button>
-    );
-  }
-}
-
-
-class Filter extends Component {
 
   render(){
     return (
-        this.props.sites.map((elem) => {
-          return (<SelectButton val={elem}></SelectButton>)
-    }))
+      // <SelectButton val={this.props.site}/>
+      <button type="button" onClick={this.selected} className={this.state.value ? "selected" : ""}>
+        {this.props.site}
+      </button>
+    )
   }
 }
